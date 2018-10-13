@@ -72,7 +72,7 @@ const iBlock = [[0, 1, 0]
                 [0, 1, 0]
 ]
 
-
+//saving block to variable as an arry to use later
 var blocks = [lBlock, sBlock, zBlock, tBlock, blBlock, squareBlock, iBlock]
 // defining and setting colors that will be used in an array for each block that will be used
 var colors = ['blue', 'green', 'yellow', 'red', 'orange', 'pink', 'purple']
@@ -87,13 +87,13 @@ ranBlock = blocks[Math.floor(Math.random() * blocks.length)]
 // Controls using keycodes to assign each button as a movement
 document.addEventlistner("keydown", controller)
 
-//object for the blocks
-function createBlocks(blocks ,colors){
+//object for the blocks with color parameters 
+function createBlocks(blocks ,color){
     this.blocks = blocks
-    this.colors = colors 
+    this.color = color 
 
     this.shapes = 0
-    this.mobileShape = this.blocks[this.mobileShape]
+    this.mobileShape = this.blocks[this.shapes]
 
     this.y = -2
     this.x =3
@@ -103,7 +103,7 @@ function createBlocks(blocks ,colors){
 createBlocks.prototype.fill = function(color){
     for(h= 0; h < this.mobileShape.length; h++){
         for(v = 0; v < this.mobileShape.length; v++){
-if(this.mobileShape[r][c]){
+if(this.mobileShape[v][h]){
     showSq(this.x + v, this.y + h, color)
 }
         }
@@ -111,4 +111,6 @@ if(this.mobileShape[r][c]){
 }
 
 
-createBlocks.prototype.draw = funct
+createBlocks.prototype.draw = function(){
+    this.fill(this.color)
+}
