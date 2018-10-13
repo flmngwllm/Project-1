@@ -87,5 +87,20 @@ ranBlock = blocks[Math.floor(Math.random() * blocks.length)]
 // Controls using keycodes to assign each button as a movement
 document.addEventlistner("keydown", controller)
 
+//object for the blocks
+function createBlocks(blocks ,colors){
+    this.blocks = blocks
+    this.colors = colors 
+
+    this.shapes = 0
+    this.mobileShape = this.blocks[this.mobileShape]
+
+    this.y = -2
+    this.x =3
+
+}
+
+
+
 
 
