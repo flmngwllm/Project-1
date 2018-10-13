@@ -101,8 +101,14 @@ function createBlocks(blocks ,colors){
 }
 
 createBlocks.prototype.fill = function(color){
-    
+    for(h= 0; h < this.mobileShape.length; h++){
+        for(v = 0; v < this.mobileShape.length; v++){
+if(this.mobileShape[r][c]){
+    showSq(this.x + v, this.y + h, color)
+}
+        }
+    }
 }
 
 
-
+createBlocks.prototype.draw = funct
