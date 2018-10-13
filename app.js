@@ -100,7 +100,9 @@ function createBlocks(blocks ,colors){
 
 }
 
-
+createBlocks.prototype.fill = function(color){
+    
+}
 
 
 
