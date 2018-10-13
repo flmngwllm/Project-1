@@ -66,10 +66,25 @@ const blBlock = [[0, 1, 0]
                  [0, 1, 0]
                  [1, 1, 0]
 ]
-const iBlock = [[0, 1, 0]
-                [0, 1, 0]
-                [0, 1, 0]
-                [0, 1, 0]
+const iBlock = [[0, 0, 1, 0]
+                [0, 0, 1, 0]
+                [0, 0, 1, 0]
+                [0, 0, 1, 0],
+
+                [0, 0, 0, 0]
+                [1, 1, 1, 1]
+                [0, 0, 0, 0]
+                [0, 0, 0, 0],
+
+                [0, 1, 0, 0]
+                [0, 1, 0, 0]
+                [0, 1, 0, 0]
+                [0, 1, 0, 0],
+
+                [0, 0, 0, 0]
+                [0, 0, 0, 0]
+                [1, 1, 1, 1]
+                [0, 0, 0, 0]
 ]
 
 //saving block to variable as an arry to use later
@@ -113,4 +128,9 @@ if(this.mobileShape[v][h]){
 
 createBlocks.prototype.draw = function(){
     this.fill(this.color)
+}
+
+
+createBlocks.prototype.destroy = function(){
+    this.fill(emp)
 }
