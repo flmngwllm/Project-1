@@ -262,31 +262,44 @@ createBlocks.prototype.destroy = function(){
 }
 
 createBlocks.prototype.down = function(){
+    if(!this.bounds()){
+        this.y += 1;
+        this.draw(); 
+
+    } else {
+
+    }
     
-    this.y += 1;
-    this.draw();
 }
 
 createBlocks.prototype.hardDrop = function(){
+    if(!this.bounds()){
     this.y+= 15
     this.draw();
+    }
 } 
 //function to move block to the right by 1 on the x axis
 createBlocks.prototype.mright = function(){
+    if(!this.bounds()){
     this.x+= 1;
     this.draw();
+    }
 }
 
 //function to move the block to the left by 1 on the x axis
 createBlocks.prototype.mleft = function(){
+    if(!this.bounds()){
     this.x-= 1;
     this.draw();
+    }
 }
 
 //rotating the block to the right 
 createBlocks.prototype.rotateBlockR = function(){
+    if(!this.bounds()){
     this.shapes = (this.shapes + 1)%this.type.length
     this.mobileShape = this.type[this.shapes]
+}
 }
 
 // createBlocks.prototype.rotateBlockL = function(){
