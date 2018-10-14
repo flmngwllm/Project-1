@@ -8,11 +8,6 @@ const sq = 20
 const emp = '#ffffff'
 
 
-
-// // Controls using keycodes to assign each button as a movement
-//  document.addEventlistner("keydown", controller)
-
-
 //function to colors the board and squares on the canvas
 function showSq(x,y,color){
     c.fillStyle = color
@@ -264,33 +259,50 @@ createBlocks.prototype.down = function(){
     this.draw();
 }
 
-
+//function to move block to the right by 1 on the x axis
 createBlocks.prototype.mright = function(){
     this.x+= 1;
     this.draw();
 }
 
+//function to move the block to the left by 1 on the x axis
 createBlocks.prototype.mleft = function(){
     this.x-= 1;
     this.draw();
 }
 
+//rotating the block 
 createBlocks.prototype.rotateBlock = function(){
     this.shapes = (this.shapes + 1)%this.type.length
     this.mobileShape = this.type[this.shapes]
 }
 
 createBlocks.prototype.hardDrop = function(){
-    
+    this.y+=20
+    this.draw()
 } 
 
+ // Controls using keycodes to assign each button as a movement
+ document.addEventlistner("keydown", gameControls)
+
+ function gameControls(event){
+     if(event.keycode == 37){
+        b.mleft()
+     }else if(event.keycode == 39){
+        b.mright()
+     }else if(event.keycode == 40){
+        b.down()
+     }
+ } 
 //function that animates the blocks and redraws them to the canvas
 function animate(){
     b.down()
+    b.mleft()
+    b.mright()
     requestAnimationFrame(animate)
-    c.clearRect(0 ,0 ,200 ,400)
     b.draw()
-    
+    c.clearRect(0 ,0 ,200 ,400)
+
 }
 
 
