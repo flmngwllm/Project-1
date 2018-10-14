@@ -246,7 +246,7 @@ if(this.mobileShape[h][v]){
     }
 }
 
-
+//this makes the piece show up on the field
 createBlocks.prototype.draw = function(){
     this.fill(this.color)
 }
@@ -254,7 +254,7 @@ createBlocks.prototype.draw = function(){
 b.draw()
 
 
-
+//this make the go away on the field
 createBlocks.prototype.destroy = function(){
     this.fill(emp)
 }
