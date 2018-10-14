@@ -145,9 +145,10 @@ const zBlock= [ [[1, 1, 0],
                 [1, 0, 0],
 ]
 ]
-const squareBlock =[[1, 1],
+const squareBlock =[
+    [               [1, 1],
                     [1, 1],
-                    
+]
 ]
 const blBlock = [[
                  [0, 1, 0],
