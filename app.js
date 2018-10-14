@@ -264,6 +264,7 @@ createBlocks.prototype.down = function(){
     this.draw();
 }
 
+
 createBlocks.prototype.mright = function(){
     this.x+= 1;
     this.draw();
@@ -273,6 +274,15 @@ createBlocks.prototype.mleft = function(){
     this.x-= 1;
     this.draw();
 }
+
+createBlocks.prototype.rotateBlock = function(){
+    this.shapes = (this.shapes + 1)%this.type.length
+    this.mobileShape = this.type[this.shapes]
+}
+
+createBlocks.prototype.hardDrop = function(){
+    
+} 
 
 //function that animates the blocks and redraws them to the canvas
 function animate(){
