@@ -298,7 +298,18 @@ createBlocks.prototype.bounds = function(){
 }
 
 createBlocks.prototype.connectBl = function(){
+    for(h= 0; h < this.mobileShape.length; h++){
+        for(v = 0; v < this.mobileShape.length; v++){
+        if(!this.mobileShape[h][v]){
+            continue
+}
 
+    if(this.y + h < -1){
+        break
+    }
+        }
+    
+}
 }
 
  // Controls using keycodes to assign each button as a movement
@@ -321,7 +332,7 @@ createBlocks.prototype.connectBl = function(){
  
 //function that animates the blocks and redraws them to the canvas
 let rate = Date.now()
-
+//using actual time to have the block drop every 1 sec
 function animate(){
     let fall = Date.now()
     let blockSpd = fall - rate
@@ -329,7 +340,9 @@ function animate(){
         b.down() 
         rate=Date.now()
     }
+    //animates by continuous looping itself
     requestAnimationFrame(animate)
+    //this clears then redraws everything to the board
     c.clearRect(0 ,0 ,200 ,400)
     b.draw()
 }
