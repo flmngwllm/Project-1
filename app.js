@@ -294,23 +294,31 @@ createBlocks.prototype.rotateBlockR = function(){
 // } 
 
 createBlocks.prototype.bounds = function(){
-
+    for(h= 0; h < this.blocks.length; h++){
+        for(v = 0; v < this.blocks.length; v++){
+if(this.mobileShape[h][v]){
+    showSq(this.x + v, this.y + h, color)
 }
-
-createBlocks.prototype.connectBl = function(){
-    for(h= 0; h < this.mobileShape.length; h++){
-        for(v = 0; v < this.mobileShape.length; v++){
-        if(!this.mobileShape[h][v]){
-            continue
-}
-
-    if(this.y + h < -1){
-        break
-    }
         }
     
 }
-}
+
+
+//COMEBACK TO LATER CANT TELL IF THIS WORKS 
+// createBlocks.prototype.connectBl = function(){
+//     for(h= 0; h < this.mobileShape.length; h++){
+//         for(v = 0; v < this.mobileShape.length; v++){
+//         if(!this.mobileShape[h][v]){
+//             continue
+// }
+
+//     if(this.y + h < -1){
+//         break
+//     }
+//         }
+    
+// }
+// }
 
  // Controls using keycodes to assign each button as a movement
  document.addEventListener("keydown", gameControls)
