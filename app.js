@@ -266,6 +266,10 @@ createBlocks.prototype.down = function(){
     this.draw();
 }
 
+createBlocks.prototype.hardDrop = function(){
+    this.y+= 15
+    this.draw();
+} 
 //function to move block to the right by 1 on the x axis
 createBlocks.prototype.mright = function(){
     this.x+= 1;
@@ -278,18 +282,24 @@ createBlocks.prototype.mleft = function(){
     this.draw();
 }
 
-//rotating the block 
-createBlocks.prototype.rotateBlock = function(){
+//rotating the block to the right 
+createBlocks.prototype.rotateBlockR = function(){
     this.shapes = (this.shapes + 1)%this.type.length
     this.mobileShape = this.type[this.shapes]
 }
 
-createBlocks.prototype.hardDrop = function(){
-    this.y+= 15
-    this.draw();
-} 
+// createBlocks.prototype.rotateBlockL = function(){
+//     this.shapes = (this.shapes - 1)+this.type.length
+//     this.mobileShape = this.type[this.shapes]
+// } 
 
+createBlocks.prototype.bounds = function(){
 
+}
+
+createBlocks.prototype.connectBl = function(){
+
+}
 
  // Controls using keycodes to assign each button as a movement
  document.addEventListener("keydown", gameControls)
@@ -304,7 +314,7 @@ createBlocks.prototype.hardDrop = function(){
      }else if(event.keyCode == 38){
          b.hardDrop()
      }else if(event.keyCode == 32){
-        b.rotateBlock()
+        b.rotateBlockR()
      }
  } 
 
@@ -319,7 +329,6 @@ function animate(){
         b.down() 
         rate=Date.now()
     }
-    
     requestAnimationFrame(animate)
     c.clearRect(0 ,0 ,200 ,400)
     b.draw()
