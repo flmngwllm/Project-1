@@ -195,14 +195,16 @@ const iBlock = [[
                 [0, 1, 0, 0],
                 [0, 1, 0, 0],
                 [0, 1, 0, 0],
-[
 ],
+
+[
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
                 [1, 1, 1, 1],
                 [0, 0, 0, 0],
 ]
 ]
+
 
 //saving block to variable as an arry to use later
 var blocks = [
@@ -283,7 +285,8 @@ createBlocks.prototype.rotateBlock = function(){
 }
 
 createBlocks.prototype.hardDrop = function(){
-    this.y+= 25
+    this.y+= 15
+    this.draw();
 } 
 
 
@@ -298,7 +301,11 @@ createBlocks.prototype.hardDrop = function(){
         b.mright()
      }else if(event.keyCode == 40){
         b.down()
-     }else if(event.key)
+     }else if(event.keyCode == 38){
+         b.hardDrop()
+     }else if(event.keyCode == 32){
+        b.rotateBlock()
+     }
  } 
 
  
