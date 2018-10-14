@@ -97,7 +97,7 @@ const tBlock = [
         ]
 ]
 const sBlock= [
-               [[0, 1, 1],
+              [[0, 1, 1],
                [1, 1, 0],
                [0, 0, 0],
 ],
@@ -262,6 +262,7 @@ createBlocks.prototype.destroy = function(){
 }
 
 createBlocks.prototype.down = function(){
+    
     this.y += 1;
     this.draw();
 }
@@ -293,14 +294,29 @@ createBlocks.prototype.rotateBlockR = function(){
 //     this.mobileShape = this.type[this.shapes]
 // } 
 
-createBlocks.prototype.bounds = function(){
+
+//checks the field to see
+createBlocks.prototype.bounds = function(x,y,block){
     for(h= 0; h < this.blocks.length; h++){
         for(v = 0; v < this.blocks.length; v++){
-if(this.mobileShape[h][v]){
-    showSq(this.x + v, this.y + h, color)
+if(!block[h][v]){
+    continue;
+}
+let dx = this.x + x + v
+let dy = this.y + y + h 
+
+if (dx < 0 || dx >= Columns || dy >= Rows ){
+    return true;
+}
+if (dy < 0){
+    continue
+}
+if (field[dy][dx]!= emp){
+    return true
+}
 }
         }
-    
+    return false
 }
 
 
