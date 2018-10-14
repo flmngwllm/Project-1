@@ -6,6 +6,11 @@ const Columns = 10
 const Rows = 20
 const sq = 20
 const emp = '#ffffff'
+const y =0
+
+
+// // Controls using keycodes to assign each button as a movement
+//  document.addEventlistner("keydown", controller)
 
 
 //function to colors the board and squares on the canvas
@@ -255,7 +260,7 @@ createBlocks.prototype.destroy = function(){
 }
 
 createBlocks.prototype.down = function(){
-    this.y+= 1;
+    this.y += 1;
     this.draw();
 }
 
@@ -278,33 +283,39 @@ createBlocks.prototype.rotateBlock = function(){
 }
 
 createBlocks.prototype.hardDrop = function(){
-    this.y+=20
-    this.draw()
+    this.y+= 25
 } 
 
+
+
  // Controls using keycodes to assign each button as a movement
- document.addEventlistner("keydown", gameControls)
+ document.addEventListener("keydown", gameControls)
 
  function gameControls(event){
-     if(event.keycode == 37){
+     if(event.keyCode == 37){
         b.mleft()
-     }else if(event.keycode == 39){
+     }else if(event.keyCode == 39){
         b.mright()
-     }else if(event.keycode == 40){
+     }else if(event.keyCode == 40){
         b.down()
-     }
+     }else if(event.key)
  } 
+
+ 
 //function that animates the blocks and redraws them to the canvas
+let rate = Date.now()
+
 function animate(){
-    b.down()
-    b.mleft()
-    b.mright()
+    let fall = Date.now()
+    let blockSpd = fall - rate
+    if(blockSpd > 1000){
+        b.down() 
+        rate=Date.now()
+    }
+    
     requestAnimationFrame(animate)
-    b.draw()
     c.clearRect(0 ,0 ,200 ,400)
-
+    b.draw()
 }
-
-
 
 animate()
