@@ -259,4 +259,21 @@ createBlocks.prototype.destroy = function(){
     this.fill(emp)
 }
 
+createBlocks.prototype.down = function(){
+    this.y+= 1;
+    this.draw();
+}
 
+c
+//function that animates the blocks and redraws them to the canvas
+function animate(){
+    b.down()
+    requestAnimationFrame(animate)
+    c.clearRect(0 ,0 ,200 ,400)
+    b.draw()
+    
+}
+
+
+
+animate()
