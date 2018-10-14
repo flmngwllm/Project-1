@@ -264,7 +264,16 @@ createBlocks.prototype.down = function(){
     this.draw();
 }
 
-c
+createBlocks.prototype.mright = function(){
+    this.x+= 1;
+    this.draw();
+}
+
+createBlocks.prototype.mleft = function(){
+    this.x-= 1;
+    this.draw();
+}
+
 //function that animates the blocks and redraws them to the canvas
 function animate(){
     b.down()
