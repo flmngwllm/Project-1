@@ -1,5 +1,7 @@
 
-
+.score1{
+    color: white;
+}
 h1{
     text-align: center;
     color: white;
@@ -43,4 +45,10 @@ button{
     
   
     
+}
+
+
+.container3{
+    display: flex;
+    justify-content: center;
 }

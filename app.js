@@ -7,8 +7,9 @@ const Columns = 10
 const Rows = 20
 const sq = 20
 const emp = '#ffffff'
-
-
+const Points = document.querySelector("score1")
+var score = 0
+var music = document.querySelector(".me")
 
 //function to colors the board and squares on the canvas
 function showSq(x, y, color) {
@@ -226,7 +227,8 @@ var blocks = [
 //randomizing the different blocks that will appear
 function ranBlck() {
     let r = ranBlock = Math.floor(Math.random() * blocks.length)
-    let rc = ranColo = Math.floor(Math.random() * blocks.length)
+    //come back later
+    // let rc = ranColo = Math.floor(Math.random() * color.length)
     return new createBlocks(blocks[r][0], blocks[r][1])
 }
 
@@ -243,8 +245,8 @@ function createBlocks(type, color) {
     this.shapes = 0
     this.mobileShape = this.type[this.shapes]
 
-    //starting position of the blocks on the field
-    this.y = -2
+    //starting position of the blocks to start above the field
+    this.y = -3
     this.x = 3
 
 }
@@ -341,6 +343,7 @@ createBlocks.prototype.rotateBlockR = function () {
     }
 }
 
+//counld neve get it to rotate twice without disappearing
 // createBlocks.prototype.rotateBlockL = function(){
 //     this.shapes = (this.shapes - 1)+this.type.length
 //     this.mobileShape = this.type[this.shapes]
@@ -351,17 +354,22 @@ createBlocks.prototype.rotateBlockR = function () {
 createBlocks.prototype.connectBl = function () {
     for (h = 0; h < this.mobileShape.length; h++) {
         for (v = 0; v < this.mobileShape.length; v++) {
+            //emp
             if (!this.mobileShape[h][v]) {
                 continue
             }
 
             if (this.y + h < 0 ) {
+                 music.pause()
                 var audio = new Audio('SD.mp3');
                 audio.play();
                 alert("you lose")
+
+                //stop loop
                 youlose = true
                 break
             }
+        
             field[this.y + h][this.x + v] = this.color
         }
     }
@@ -385,8 +393,13 @@ createBlocks.prototype.connectBl = function () {
                 field[0][v] = emp
             }
         }
-
+       
+            
+        
+            
+        
     }
+    
     drawfield();
 }
 
@@ -473,8 +486,12 @@ ranBlck()
  animate()
 })
 
+//will run the game when start button is clicked
 start.addEventListener('click', function(){
-    animate() 
+   var music = document.querySelector(".me")
+    music.play()
+    animate()
+    
 })
 
 
@@ -551,3 +568,4 @@ while (cell.length < numcell){
 
 update()
 drawC()
+
