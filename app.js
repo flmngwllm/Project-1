@@ -8,9 +8,6 @@ const emp = '#ffffff'
 
 
 
-// // Controls using keycodes to assign each button as a movement
-//  document.addEventlistner("keydown", controller)
-
 
 //function to colors the board and squares on the canvas
 function showSq(x, y, color) {
@@ -246,11 +243,14 @@ function createBlocks(type, color) {
     this.shapes = 0
     this.mobileShape = this.type[this.shapes]
 
-    this.y = 3
+    //starting position of the blocks on the field
+    this.y = -2
     this.x = 3
 
 }
 
+
+// 
 createBlocks.prototype.fill = function (color) {
     for (h = 0; h < this.mobileShape.length; h++) {
         for (v = 0; v < this.mobileShape.length; v++) {
@@ -266,7 +266,7 @@ createBlocks.prototype.draw = function () {
     this.fill(this.color)
 }
 
-b.draw()
+
 
 
 //this make the go away on the field
@@ -275,33 +275,42 @@ createBlocks.prototype.destroy = function () {
 }
 
 createBlocks.prototype.down = function () {
-    if (!this.bounds(0, 1, this.mobileShape)) {
+    if (!this.bounds(0,1,this.mobileShape)) {
+        this.destroy()
         this.y += 1;
         this.draw();
-
-    } else {
         
+    } else {
+
+
+        b = ranBlock()
+
     }
 
 }
 
-createBlocks.prototype.hardDrop = function () {
-    if (!this.bounds(0, 2, this.mobileShape)) {
-        this.y += 15
-        this.draw();
-    }
-}
+// //hard drop still a work in progress still goes off the board
+// createBlocks.prototype.hardDrop = function () {
+//     if (!this.bounds(0, 1, this.mobileShape)) {
+//         this.destroy()
+//         this.y += 15
+//         this.draw();
+//     }
+// }
 //function to move block to the right by 1 on the x axis
 createBlocks.prototype.mright = function () {
     if (!this.bounds(1, 0, this.mobileShape)) {
+        this.destroy()
         this.x += 1;
         this.draw();
+        
     }
 }
 
 //function to move the block to the left by 1 on the x axis
 createBlocks.prototype.mleft = function () {
     if (!this.bounds(-1, 0, this.mobileShape)) {
+        this.destroy()
         this.x -= 1;
         this.draw();
     }
@@ -309,8 +318,16 @@ createBlocks.prototype.mleft = function () {
 
 //rotating the block to the right 
 createBlocks.prototype.rotateBlockR = function () {
+    
     let change = this.type[(this.shapes + 1) % this.type.length]
+    //
+    let bounce = 0
+   if(this.bounds(0, 0, change)){
+    bounce = this.x > Columns/2 ? -1: 1
+   }
+   
     if (!this.bounds(0, 0, change)) {
+        this.x = this.x + bounce
         this.shapes = (this.shapes + 1) % this.type.length
         this.mobileShape = this.type[this.shapes]
     }
@@ -386,16 +403,19 @@ let rate = Date.now()
 //using actual time to have the block drop every 1 sec
 function animate() {
     let fall = Date.now()
+
     let blockSpd = fall - rate
     if (blockSpd > 1000) {
         b.down()
+        
         rate = Date.now()
     }
+   
     //animates by continuous looping itself
     requestAnimationFrame(animate)
     //this clears then redraws everything to the board
-    c.clearRect(0, 0, 200, 400)
-    b.draw()
+    // c.clearRect(0, 0, 200, 400)
+    // b.draw()
 }
 
 animate()
