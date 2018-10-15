@@ -8,13 +8,12 @@ const emp = '#ffffff'
 
 
 
-
 //function to colors the board and squares on the canvas
 function showSq(x, y, color) {
     c.fillStyle = color
     c.fillRect(x * sq, y * sq, sq, sq)
 
-    c.strokeStyle = "#000000"
+    c.strokeStyle = "#ffffff"
     c.strokeRect(x * sq, y * sq, sq, sq)
 
 
@@ -220,13 +219,12 @@ var blocks = [
     [squareBlock, "blue"],
     [iBlock, "purple"]
 ]
-// defining and setting colors that will be used in an array for each block that will be used
-// var colors = ['blue', 'green', 'yellow', 'red', 'orange', 'pink', 'purple']
 
 
 //randomizing the different blocks that will appear
 function ranBlck() {
     let r = ranBlock = Math.floor(Math.random() * blocks.length)
+    let rc = ranColo = Math.floor(Math.random() * blocks.length)
     return new createBlocks(blocks[r][0], blocks[r][1])
 }
 
@@ -281,8 +279,9 @@ createBlocks.prototype.down = function () {
         this.draw();
 
     } else {
-
+//stacks and locks blocks
         this.connectBl()
+    //randomize blocks that appear
         b = ranBlck()
 
     }
@@ -290,13 +289,13 @@ createBlocks.prototype.down = function () {
 }
 
 // //hard drop still a work in progress still goes off the board
-// createBlocks.prototype.hardDrop = function () {
-//     if (!this.bounds(0, 1, this.mobileShape)) {
-//         this.destroy()
-//         this.y += 15
-//         this.draw();
-//     }
-// }
+createBlocks.prototype.hardDrop = function () {
+    if (!this.bounds(0, 1, this.mobileShape)) {
+        this.destroy()
+        this.y += 15
+        this.draw();
+    }
+}
 
 
 //function to move block to the right by 1 on the x axis
@@ -312,19 +311,19 @@ createBlocks.prototype.mright = function () {
 //function to move the block to the left by 1 on the x axis
 createBlocks.prototype.mleft = function () {
     if (!this.bounds(-1, 0, this.mobileShape)) {
-        this.destroy()
+       this.destroy()
         this.x -= 1;
         this.draw();
     }
 }
 
 //rotating the block to the right 
-createBlocks.prototype.rotateBlockR= function() {
+createBlocks.prototype.rotateBlockR = function () {
     let change = this.type[(this.shapes + 1) % this.type.length]
     let bounce = 0
 
     if (this.bounds(0, 0, change)) {
-        if (this.x > Columns/2) {
+        if (this.x > Columns / 2) {
             bounce = -1
         } else {
             bounce = 1
@@ -332,7 +331,7 @@ createBlocks.prototype.rotateBlockR= function() {
     }
 
     if (!this.bounds(bounce, 0, change)) {
-        this.undraw()
+        this.destroy()
         this.x += bounce
         this.shapes = (this.shapes + 1) % this.type.length
         this.mobileShape = this.type[this.shapes]
@@ -346,7 +345,7 @@ createBlocks.prototype.rotateBlockR= function() {
 // } 
 
 
-//COMEBACK TO LATER CANT TELL IF THIS WORKS 
+//locks the blocks so they can stack on each other
 createBlocks.prototype.connectBl = function () {
     for (h = 0; h < this.mobileShape.length; h++) {
         for (v = 0; v < this.mobileShape.length; v++) {
@@ -354,7 +353,9 @@ createBlocks.prototype.connectBl = function () {
                 continue
             }
 
-            if (this.y + h < 0) {
+            if (this.y + h < 0 ) {
+                var audio = new Audio('SD.mp3');
+                audio.play();
                 alert("you lose")
                 youlose = true
                 break
@@ -362,7 +363,30 @@ createBlocks.prototype.connectBl = function () {
             field[this.y + h][this.x + v] = this.color
         }
     }
+
+    //this clears the lines when they get full
+
+    for (h = 0; h < Rows; h++) {
+        let fullRow = true
+        for (v = 0; v < Columns; v++) {
+            fullRow = fullRow && (field[h][v] != emp)
+        }
+        if (fullRow) {
+            for (y = h; y > 1; y--) {
+                for (v = 0; v < Columns; v++) {
+                    field[y][v] = field[y - 1][v]
+                }
+                var audio = new Audio('megadestroy.mp3');
+                audio.play();
+            }
+            for (v = 0; v < Columns; v++) {
+                field[0][v] = emp
+            }
+        }
+
     }
+    drawfield();
+}
 
 
 
@@ -393,44 +417,90 @@ createBlocks.prototype.bounds = function (x, y, blocks) {
 
 
 
-        // Controls using keycodes to assign each button as a movement
-        document.addEventListener("keydown", gameControls)
+// Controls using keycodes to assign each button as a movement
+document.addEventListener("keydown", gameControls)
 
-        function gameControls(event) {
-            if (event.keyCode == 37) {
-                b.mleft()
-            } else if (event.keyCode == 39) {
-                b.mright()
-            } else if (event.keyCode == 40) {
-                b.down()
-            } else if (event.keyCode == 32) {
-                b.rotateBlockR()
-            // else if (event.keyCode == 38) {
-            //     b.hardDrop()}
-           
-            }
+function gameControls(event) {
+    if (event.keyCode == 37) {
+        b.mleft()
+    } else if (event.keyCode == 39) {
+        b.mright()
+    } else if (event.keyCode == 40) {
+        b.down()
+    } else if (event.keyCode == 32) {
+        b.rotateBlockR()
+    } else if (event.keyCode == 38) {
+       b.hardDrop()
+    }
+
+    }
+
+
+
+//function that animates the blocks and redraws them to the canvas
+let rate = Date.now()
+let youlose = false
+//using actual time to have the block drop every 1 sec
+function animate() {
+    let fall = Date.now()
+
+    let blockSpd = fall - rate
+    if (blockSpd > 1000) {
+        b.down()
+        rate = Date.now()
+    }
+    if (!youlose) {
+        //animates by continuous looping itself
+        requestAnimationFrame(animate)
+       
+    }
+    //this clears then redraws everything to the board
+    
+}
+var newGame = document.querySelector('.newGame')
+var start = document.querySelector('.start') 
+
+newGame.addEventListener('click',function(){
+b.destroy()
+    createBlocks()
+ranBlck()
+ animate()
+})
+
+start.addEventListener('click', function(){
+    animate() 
+})
+
+
+
+const con = document.querySelector('.back')
+con.width = window.innerWidth
+con.height= window.innerHeight
+const can = con.getContext('2d')
+let cell = []
+let numcell = 70
+let time = Date.now()
+
+function ranColors(){
+let Rcolors = ['blue', 'green', 'yellow', 'red', 'orange', 'pink', 'purple']
+return Rcolors[Math.floor(Math.random()* colors.length)]
+}
+
+function update (){
+    flow = Date.now()
+    
+}
+
+Amplitude.init({
+    "songs": [
+        {
+            "name": "Song Name 1",
+            "artist": "Artist Name",
+            "album": "Album Name",
+            "url": "SD.mp3",
+            "cover_art_url": "/cover/art/url.jpg"
         }
-
-
-        //function that animates the blocks and redraws them to the canvas
-        let rate = Date.now()
-        let youlose = false
-        //using actual time to have the block drop every 1 sec
-        function animate() {
-            let fall = Date.now()
-
-            let blockSpd = fall - rate
-            if (blockSpd > 1000) {
-                b.down()
-                rate = Date.now()
-            }
-            if (!youlose) {
-                //animates by continuous looping itself
-                requestAnimationFrame(animate)
-            }
-            //this clears then redraws everything to the board
-            // c.clearRect(0, 0, 200, 400)
-            // b.draw()
-        }
-
-        animate()
+     
+       
+    ]
+});
