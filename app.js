@@ -1,6 +1,8 @@
 //constant variables that will not change throughout
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext("2d")
+canvas.width = 200
+canvas.height = 400
 const Columns = 10
 const Rows = 20
 const sq = 20
@@ -364,7 +366,7 @@ createBlocks.prototype.connectBl = function () {
         }
     }
 
-    //this clears the lines when they get full
+    //checks to see if what square is not empty this clears the lines when they get full
 
     for (h = 0; h < Rows; h++) {
         let fullRow = true
@@ -390,29 +392,32 @@ createBlocks.prototype.connectBl = function () {
 
 
 
-
-//checks the field to see
+var box = 1
+var barrier = 2
+//
 createBlocks.prototype.bounds = function (x, y, blocks) {
     for (h = 0; h < blocks.length; h++) {
         for (v = 0; v < blocks.length; v++) {
+
             if (!blocks[h][v]) {
                 continue;
             }
             let dx = this.x + x + v
             let dy = this.y + y + h
-
-            if (dx < 0 || dx >= Columns || dy >= Rows) {
-                return true;
+            //keeps the blocks within its bounds
+            if (dy >= Rows || dx < 0 || dx >= Columns) {
+                return box;
             }
+            //keeps from breaking the whole game by skipping loop
             if (dy < 0) {
                 continue
             }
             if (field[dy][dx] != emp) {
-                return true
+                return barrier
             }
         }
     }
-    return false
+    return 0
 }
 
 
@@ -460,6 +465,7 @@ function animate() {
 var newGame = document.querySelector('.newGame')
 var start = document.querySelector('.start') 
 
+//not working yet but its to start a new game
 newGame.addEventListener('click',function(){
 b.destroy()
     createBlocks()
@@ -474,33 +480,74 @@ start.addEventListener('click', function(){
 
 
 const con = document.querySelector('.back')
+//making screen responsive fo background
 con.width = window.innerWidth
 con.height= window.innerHeight
 const can = con.getContext('2d')
 let cell = []
-let numcell = 70
+// setting the number of items
+let numcell = 100
 let time = Date.now()
 
+//function for randomcolors
 function ranColors(){
 let Rcolors = ['blue', 'green', 'yellow', 'red', 'orange', 'pink', 'purple']
-return Rcolors[Math.floor(Math.random()* colors.length)]
+return Rcolors[Math.floor(Math.random()* Rcolors.length)]
 }
 
+
+// function that sets the drop rate, rotation speed and creating each piece to fill the canvas
 function update (){
-    flow = Date.now()
-    
+    let flow = Date.now()
+    ft = flow - time
+
+    for( let i = cell.length -1; i >= 0; i--){
+        let c = cell[i]
+
+        if(c.y > con.height){
+            cell.splice(i, 1)
+            continue
+        }
+        c.y += c.grav * ft
+        c.spin += c.spinspeed * ft
+    }
+
+    while (cell.length < numcell){
+        cell.push(new Cell(Math.random()*con.width, -20))
+    }
+    time = flow
+    setTimeout(update, 1)
 }
 
-Amplitude.init({
-    "songs": [
-        {
-            "name": "Song Name 1",
-            "artist": "Artist Name",
-            "album": "Album Name",
-            "url": "SD.mp3",
-            "cover_art_url": "/cover/art/url.jpg"
-        }
-     
-       
-    ]
-});
+//function to draw to the canvas when called
+function drawC(){
+    can.clearRect(0,0, con.width, con.height)
+// loop that goes over and applies to the squares
+    cell.forEach(function (c){
+    can.save()
+    can.fillStyle = c.color
+    can.translate(c.x +c.size /2, c.y + c.size / 2 )
+    can.rotate(c.spin)
+    can.fillRect(-c.size / 2, -c.size/ 2, c.size, c.size)
+    can.restore()
+})
+ requestAnimationFrame(drawC)
+}
+
+
+function Cell(x,y){
+    this.x = x
+    this.y = y
+    this.size = (Math.random()* 0.5 + 0.75)*15
+    this.grav = (Math.random()* 0.5 + 0.75)*0.1
+    this.spin = (Math.PI*2) * Math.random()
+    this.spinspeed = (Math.PI*2) * (Math.random() - 0.5) * 0.001
+    this.color = ranColors()
+}
+
+while (cell.length < numcell){
+    cell.push(new Cell(Math.random()* con.width, Math.random() * con.height ))
+}
+
+update()
+drawC()
