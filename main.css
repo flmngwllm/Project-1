@@ -1,12 +1,13 @@
 
-.score1{
-    color: white;
-}
+
+
 h1{
     text-align: center;
     color: white;
     font-size: 48px;
 }
+
+
 
 .container{
     display: flex;

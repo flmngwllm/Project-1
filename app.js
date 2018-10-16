@@ -5,19 +5,19 @@ canvas.width = 200
 canvas.height = 400
 const Columns = 10
 const Rows = 20
-const sq = 20
+const bo = 20
 const emp = '#ffffff'
-const Points = document.querySelector("score1")
-var score = 0
+//const Points = document.querySelector("score1")
+//var score = 0
 var music = document.querySelector(".me")
 
 //function to colors the board and squares on the canvas
 function showSq(x, y, color) {
     c.fillStyle = color
-    c.fillRect(x * sq, y * sq, sq, sq)
+    c.fillRect(x * bo, y * bo, bo, bo)
 
     c.strokeStyle = "#ffffff"
-    c.strokeRect(x * sq, y * sq, sq, sq)
+    c.strokeRect(x * bo, y * bo, bo, bo)
 
 
 }
@@ -33,16 +33,6 @@ for (h = 0; h < Rows; h++) {
 }
 
 
-//function to draw the canvas to be displayed 
-function drawfield() {
-    for (h = 0; h < Rows; h++) {
-        for (v = 0; v < Columns; v++) {
-            showSq(v, h, field[h][v])
-        }
-    }
-}
-
-drawfield()
 
 
 //block types using binary and arrays to plot the the positions and to have specific shapes drawn out to the canvas
@@ -210,6 +200,18 @@ const iBlock = [
         [0, 0, 0, 0],
     ]
 ]
+
+
+//function to draw the canvas to be displayed 
+function drawfield() {
+    for (h = 0; h < Rows; h++) {
+        for (v = 0; v < Columns; v++) {
+            showSq(v, h, field[h][v])
+        }
+    }
+}
+
+drawfield()
 
 
 //saving block to variable as an arry to use later
@@ -497,7 +499,7 @@ start.addEventListener('click', function(){
 
 
 const con = document.querySelector('.back')
-//making screen responsive fo background
+//making screen responsive when shrinked
 con.width = window.innerWidth
 con.height= window.innerHeight
 const can = con.getContext('2d')
@@ -536,6 +538,20 @@ function update (){
     setTimeout(update, 1)
 }
 
+
+
+
+function Cell(x,y){
+    this.x = x
+    this.y = y
+    this.color = ranColors()
+    this.size = (Math.random()* 0.5 + 0.75)*15
+    this.spin = (Math.PI*2) * Math.random()
+    this.spinspeed = (Math.PI*2) * (Math.random() - 0.5) * 0.001
+    this.grav = (Math.random()* 0.5 + 0.62)*0.1
+
+}
+
 //function to draw to the canvas when called
 function drawC(){
     can.clearRect(0,0, con.width, con.height)
@@ -549,18 +565,6 @@ function drawC(){
     can.restore()
 })
  requestAnimationFrame(drawC)
-}
-
-
-function Cell(x,y){
-    this.x = x
-    this.y = y
-    this.color = ranColors()
-    this.size = (Math.random()* 0.5 + 0.75)*15
-    this.spin = (Math.PI*2) * Math.random()
-    this.spinspeed = (Math.PI*2) * (Math.random() - 0.5) * 0.001
-    this.grav = (Math.random()* 0.5 + 0.62)*0.1
-
 }
 
 while (cell.length < numcell){
