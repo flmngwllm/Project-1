@@ -7,6 +7,11 @@
 ##Project link
 http://sleepy-kepler-5d02c9.netlify.com
 
+
+##Wireframe
+![alt text](Wireframes/wire1.jpg)
+![alt text](Wireframes/wire2.jpg)
+
 #Trello
 ##https://trello.com/b/aM0l3ZBV/tetris-project-1
 

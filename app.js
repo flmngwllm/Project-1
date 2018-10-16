@@ -480,7 +480,7 @@ var start = document.querySelector('.start')
 
 //not working yet but its to start a new game
 newGame.addEventListener('click',function(){
-b.destroy()
+destroy()
     createBlocks()
 ranBlck()
  animate()
@@ -545,7 +545,7 @@ function drawC(){
     can.fillStyle = c.color
     can.translate(c.x +c.size /2, c.y + c.size / 2 )
     can.rotate(c.spin)
-    can.fillRect(-c.size / 2, -c.size/ 2, c.size, c.size)
+    can.fillRect(-c.size / 1, -c.size/ 1, c.size, c.size)
     can.restore()
 })
  requestAnimationFrame(drawC)
@@ -555,11 +555,12 @@ function drawC(){
 function Cell(x,y){
     this.x = x
     this.y = y
+    this.color = ranColors()
     this.size = (Math.random()* 0.5 + 0.75)*15
-    this.grav = (Math.random()* 0.5 + 0.75)*0.1
     this.spin = (Math.PI*2) * Math.random()
     this.spinspeed = (Math.PI*2) * (Math.random() - 0.5) * 0.001
-    this.color = ranColors()
+    this.grav = (Math.random()* 0.5 + 0.62)*0.1
+
 }
 
 while (cell.length < numcell){
