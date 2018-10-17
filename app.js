@@ -16,9 +16,8 @@ function showSq(x, y, color) {
     c.fillStyle = color
     c.fillRect(x * bo, y * bo, bo, bo)
 
-    c.strokeStyle = "#ffffff"
     c.strokeRect(x * bo, y * bo, bo, bo)
-
+    c.strokeStyle = "#ffffff"
 
 }
 
@@ -465,7 +464,7 @@ function animate() {
     let fall = Date.now()
 
     let blockSpd = fall - rate
-    if (blockSpd > 1000) {
+    if (blockSpd > 900) {
         b.down()
         rate = Date.now()
     }
@@ -545,7 +544,7 @@ function Cell(x,y){
     this.x = x
     this.y = y
     this.color = ranColors()
-    this.size = (Math.random()* 0.5 + 0.75)*15
+    this.size = (Math.random()* 0.5 + 0.86)*15
     this.spin = (Math.PI*2) * Math.random()
     this.spinspeed = (Math.PI*2) * (Math.random() - 0.5) * 0.001
     this.grav = (Math.random()* 0.5 + 0.62)*0.1
@@ -559,17 +558,17 @@ function drawC(){
     cell.forEach(function (c){
     can.save()
     can.fillStyle = c.color
-    can.translate(c.x +c.size /2, c.y + c.size / 2 )
+    can.translate(c.x + c.size /2, c.y + c.size / 2 )
     can.rotate(c.spin)
-    can.fillRect(-c.size / 1, -c.size/ 1, c.size, c.size)
+    can.fillRect(-c.size / 1.6, -c.size/ 1.6, c.size, c.size)
     can.restore()
 })
  requestAnimationFrame(drawC)
 }
-
-while (cell.length < numcell){
+for(i = 1; cell.length < numcell; i++){
     cell.push(new Cell(Math.random()* con.width, Math.random() * con.height ))
 }
+
 
 update()
 drawC()
