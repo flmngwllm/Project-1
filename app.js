@@ -530,7 +530,7 @@ function update (){
         c.spin += c.spinspeed * ft
     }
 
-    while (cell.length < numcell){
+    for(i = 1; cell.length < numcell; i++){
         cell.push(new Cell(Math.random()*con.width, -20))
     }
     time = flow
